@@ -16,6 +16,21 @@
 # Mono auto generated files
 mono_crash.*
 
+#Ignore unity junk file
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+[Ll]ogs/
+[Uu]serSettings/
+MemoryCaptures/
+*.csproj
+*.sln
+*.slnx
+.vsconfig
+
+
 # Build results
 [Dd]ebug/
 [Dd]ebugPublic/
