@@ -8,8 +8,7 @@ public class Player_JumpState : Player_AirState {
     public override void Enter() {
         base.Enter();
 
-        // Jump
-        rb.linearVelocity = new Vector2(rb.linearVelocity.x, player.jumpSpeed);
+        player.SetVelocity(rb.linearVelocity.x, player.jumpSpeed);
     }
 
     public override void Update() {

@@ -15,19 +15,26 @@ public class Player : MonoBehaviour
     public Player_JumpState jumpState { get; private set; }
     public Player_FallState fallState { get; private set; }
     public Player_WallSlideState wallSlideState { get; private set; }
+    public Player_WallJumpState wallJumpState { get; private set; }
+    public Player_DashState dashState { get; private set; }
 
 
     [Header("Movement Details")]
     public float moveSpeed { get; private set; } = 8f;
     public float jumpSpeed { get; private set; } = 12f;
-    [Range(0, 1)]
+    public Vector2 moveInput { get; private set; }
+    
+    private bool isFacingRight = true;
+    public float dashDuration { get; private set; } = 0.25f;
+    public float dashSpeed { get; private set; } = 20f;
+
     public float inAirSpeedMultiplier { get; private set; } = 0.7f;
     public float wallSlideSlowMultiplier { get; private set; } = 0.7f;
-    private bool isFacingRight = true;
-    public Vector2 moveInput { get; private set; }
+    public Vector2 wallJumpMultiplier { get; private set; } = new Vector2(6, 12);
+    
 
     [Header("Collision Detection")]
-    private int facingDir = 1;
+    public int facingDir { get; private set; } = 1;
     [SerializeField] private float groundCheckingDistance;
     [SerializeField] private float wallCheckDistance;
     [SerializeField] private LayerMask whatIsGround;
@@ -46,6 +53,8 @@ public class Player : MonoBehaviour
         jumpState = new Player_JumpState(this, stateMachine, "Jump/Fall");
         fallState = new Player_FallState(this, stateMachine, "Jump/Fall");
         wallSlideState = new Player_WallSlideState(this, stateMachine, "WallSlide");
+        wallJumpState = new Player_WallJumpState(this, stateMachine, "Jump/Fall");
+        dashState = new Player_DashState(this, stateMachine, "Dash");
     }
 
     private void OnEnable() {

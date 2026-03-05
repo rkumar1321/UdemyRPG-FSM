@@ -10,6 +10,8 @@ public abstract class EntityState {
     protected Rigidbody2D rb;
     protected PlayerInputActions playerInputActions;
 
+    protected float stateTimer;
+
     public EntityState(Player player, StateMachine stateMachine, string animBoolName) {
         this.player = player;
         this.stateMachine = stateMachine;
@@ -28,9 +30,26 @@ public abstract class EntityState {
 
     public virtual void Update() {
         animator.SetFloat("yVelocity", rb.linearVelocity.y);
+
+        // Enter directly from any state
+        if (playerInputActions.Player.Dash.WasPerformedThisFrame() && CanDash()) {
+            stateMachine.ChangeState(player.dashState);
+        }
     }
 
     public virtual void Exit() {
         animator.SetBool(animBoolName, false);
+    }
+
+    private bool CanDash() {
+
+        if (player.isWallAhead)
+            return false;
+
+        if (stateMachine.currentState == player.dashState)
+            return false;
+
+
+        return true;
     }
 }
