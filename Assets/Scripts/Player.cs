@@ -1,3 +1,4 @@
+using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
@@ -17,7 +18,15 @@ public class Player : MonoBehaviour
     public Player_WallSlideState wallSlideState { get; private set; }
     public Player_WallJumpState wallJumpState { get; private set; }
     public Player_DashState dashState { get; private set; }
+    public Player_BasicAttackState basicAttackState { get; private set; }
 
+    [Header("Attack Details")]
+    public float atkTimer { get; private set; } = 0.1f;
+    public float attackRepulseMovement { get; private set; } = 3f;
+    public Vector2[] atkRepulse;
+    public float comboResetTime { get; private set; } = 2f;
+    private Coroutine queueCoroutine;
+    
 
     [Header("Movement Details")]
     public float moveSpeed { get; private set; } = 8f;
@@ -55,6 +64,7 @@ public class Player : MonoBehaviour
         wallSlideState = new Player_WallSlideState(this, stateMachine, "WallSlide");
         wallJumpState = new Player_WallJumpState(this, stateMachine, "Jump/Fall");
         dashState = new Player_DashState(this, stateMachine, "Dash");
+        basicAttackState = new Player_BasicAttackState(this, stateMachine, "BasicAttack");
     }
 
     private void OnEnable() {
@@ -78,6 +88,18 @@ public class Player : MonoBehaviour
         stateMachine.UpdateActiveState();
     }
 
+    public void EnterAttackStateWithDelay() {
+        if(queueCoroutine != null)
+            StopCoroutine(queueCoroutine);
+
+        queueCoroutine = StartCoroutine(EnterAttackStateWithDelayCo());
+    }
+
+    private IEnumerator EnterAttackStateWithDelayCo() {
+        yield return new WaitForEndOfFrame();
+        stateMachine.ChangeState(basicAttackState);
+    }
+
     public void SetVelocity(float xVelocity, float yVelocity) {
         rb.linearVelocity = new Vector2(xVelocity, yVelocity);
 
@@ -98,6 +120,10 @@ public class Player : MonoBehaviour
 
         // For wall check
         isWallAhead = Physics2D.Raycast(transform.position, Vector2.right * facingDir, wallCheckDistance, whatIsGround);
+    }
+
+    public void CallAnimationTriggerEvents() {
+        stateMachine.currentState.CallAnimationEventStateChange();
     }
 
     private void Flip() {

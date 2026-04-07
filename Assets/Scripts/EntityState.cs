@@ -11,6 +11,7 @@ public abstract class EntityState {
     protected PlayerInputActions playerInputActions;
 
     protected float stateTimer;
+    protected bool isbasicAttack;
 
     public EntityState(Player player, StateMachine stateMachine, string animBoolName) {
         this.player = player;
@@ -26,6 +27,8 @@ public abstract class EntityState {
 
     public virtual void Enter() {
         animator.SetBool(animBoolName, true);
+
+        isbasicAttack = false;
     }
 
     public virtual void Update() {
@@ -51,5 +54,9 @@ public abstract class EntityState {
 
 
         return true;
+    }
+
+    public void CallAnimationEventStateChange() {
+        isbasicAttack = true;
     }
 }

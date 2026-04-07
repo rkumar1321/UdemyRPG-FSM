@@ -288,6 +288,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb07ba23eaeb1c545a99160b528adfa4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Player
+  atkRepulse:
+  - {x: 1, y: 1.5}
+  - {x: 2, y: 2.5}
+  - {x: 4, y: 5}
   groundCheckingDistance: 1.4
   wallCheckDistance: 0.45
   whatIsGround:
@@ -639,6 +643,7 @@ GameObject:
   - component: {fileID: 908407087}
   - component: {fileID: 908407088}
   - component: {fileID: 908407089}
+  - component: {fileID: 908407090}
   m_Layer: 0
   m_Name: Visual
   m_TagString: Untagged
@@ -742,6 +747,18 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &908407090
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 908407086}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6cc4b8689027294db9d67fda394f1aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Player_AnimationEvent
 --- !u!1 &1649730480
 GameObject:
   m_ObjectHideFlags: 0

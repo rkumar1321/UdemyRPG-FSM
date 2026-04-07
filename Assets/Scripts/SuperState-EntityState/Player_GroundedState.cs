@@ -18,5 +18,10 @@ public class Player_GroundedState : EntityState {
         if (playerInputActions.Player.Jump.WasPerformedThisFrame()) {
             stateMachine.ChangeState(player.jumpState);
         }
+
+        // If left mouse button were pressed, enter in BasicAttackState
+        if (playerInputActions.Player.Attack.WasPerformedThisFrame()) {
+            stateMachine.ChangeState(player.basicAttackState);;
+        }
     }
 }

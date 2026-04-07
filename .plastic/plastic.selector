@@ -1,4 +1,0 @@
-repository "Udemy-Course-RPG/Udemy-Course-RPG@13469262466548@cloud"
-  path "/"
-    br "/main"
-    co "/main"
